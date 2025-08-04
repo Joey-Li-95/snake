@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>贪吃蛇游戏</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'game-green': '#10B981',
+                        'game-dark': '#1F2937',
+                        'game-light': '#F3F4F6'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-green-50 to-blue-50 min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-2xl w-full">
+        <!-- 游戏标题 -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">🐍 贪吃蛇游戏</h1>
+            <p class="text-gray-600">使用方向键控制蛇的移动</p>
+        </div>
+
+        <!-- 游戏信息面板 -->
+        <div class="bg-white rounded-2xl shadow-xl p-6 mb-6">
+            <div class="grid grid-cols-3 gap-4 text-center">
+                <div class="bg-gradient-to-r from-green-400 to-green-500 rounded-xl p-4 text-white">
+                    <div class="text-2xl font-bold" id="score">0</div>
+                    <div class="text-sm opacity-90">当前分数</div>
+                </div>
+                <div class="bg-gradient-to-r from-blue-400 to-blue-500 rounded-xl p-4 text-white">
+                    <div class="text-2xl font-bold" id="highScore">0</div>
+                    <div class="text-sm opacity-90">最高分数</div>
+                </div>
+                <div class="bg-gradient-to-r from-purple-400 to-purple-500 rounded-xl p-4 text-white">
+                    <div class="text-2xl font-bold" id="level">1</div>
+                    <div class="text-sm opacity-90">当前等级</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 游戏控制按钮 -->
+        <div class="flex justify-center gap-4 mb-6">
+            <button id="startBtn" class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-3 px-8 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200">
+                🎮 开始游戏
+            </button>
+            <button id="restartBtn" class="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-bold py-3 px-8 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200">
+                🔄 重新开始
+            </button>
+            <button id="soundBtn" class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200">
+                🔊 音效开启
+            </button>
+        </div>
+
+        <!-- 游戏画布容器 -->
+        <div class="bg-white rounded-2xl shadow-xl p-6">
+            <canvas id="gameCanvas" class="border-4 border-gray-200 rounded-xl mx-auto block" width="400" height="400"></canvas>
+        </div>
+
+        <!-- 游戏说明 -->
+        <div class="mt-6 bg-white rounded-2xl shadow-xl p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-3">🎯 游戏说明</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-600">
+                <div>
+                    <p class="font-medium mb-2">🎮 控制方式：</p>
+                    <ul class="space-y-1">
+                        <li>↑ 向上移动</li>
+                        <li>↓ 向下移动</li>
+                        <li>← 向左移动</li>
+                        <li>→ 向右移动</li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="font-medium mb-2">🎯 游戏规则：</p>
+                    <ul class="space-y-1">
+                        <li>吃到食物获得分数</li>
+                        <li>撞墙或撞到自己游戏结束</li>
+                        <li>每100分升一级</li>
+                        <li>等级越高速度越快</li>
+                        <li>支持音效反馈</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 游戏结束弹窗 -->
+        <div id="gameOverModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+            <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 text-center">
+                <div class="text-6xl mb-4">🎮</div>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">游戏结束</h2>
+                <p class="text-gray-600 mb-6">您的最终得分：<span id="finalScore" class="font-bold text-green-600">0</span></p>
+                <div class="flex gap-4 justify-center">
+                    <button id="playAgainBtn" class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200">
+                        再玩一次
+                    </button>
+                    <button id="closeModalBtn" class="bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200">
+                        关闭
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html> 
